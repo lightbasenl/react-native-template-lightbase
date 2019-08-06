@@ -6,7 +6,7 @@ const baseProps = {
   allowFontScaling: false,
 };
 
-const Text: Record<string, React.FC<TextProps>> = {
+const Text: Record<string, (P: TextProps) => React.ReactNode> = {
   Base: ({ style, ...props }) => <RNText {...baseProps} {...props} style={[styles.base, style]} />,
   Bold: ({ style, ...props }) => <RNText {...baseProps} {...props} style={[styles.bold, style]} />,
 };

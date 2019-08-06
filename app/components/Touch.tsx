@@ -10,15 +10,12 @@ import View from './View';
 import { TouchableNativeFeedback as GTouchFeedback } from 'react-native-gesture-handler';
 
 type Props = TouchableOpacityProps & {
-  loading?: boolean;
-  primary?: boolean;
   children?: React.ReactNode;
-  small?: boolean;
   gestureHandler?: boolean;
   disabled?: boolean;
 };
 
-const Touchable: React.FC<Props> = ({ onPress, gestureHandler, disabled, ...rest }: Props) => {
+function Touchable({ onPress, gestureHandler, disabled, ...rest }: Props) {
   // Touch events inside gesturehandlers will not work unless the react-native-gesture-handler touchable is used on RN
   const Native = gestureHandler ? GTouchFeedback : TouchableNativeFeedback;
 
@@ -39,9 +36,9 @@ const Touchable: React.FC<Props> = ({ onPress, gestureHandler, disabled, ...rest
       />
     );
   }
-};
+}
 
-const Touch = {
+const Touch: Record<string, (p: Props) => React.ReactNode> = {
   Base: ({ children, onPress, gestureHandler, ...rest }: Props) => (
     <Touchable onPress={onPress} gestureHandler={gestureHandler} {...rest}>
       {children}
