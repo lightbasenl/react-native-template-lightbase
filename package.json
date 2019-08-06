@@ -1,7 +1,10 @@
 {
   "name": "react-native-template-lightbase",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "React native template for bootstrapping react native apps internally at lightbase",
+  "scripts": {
+    "install": "node setup.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lightbasenl/react-native-template-lightbase.git"
