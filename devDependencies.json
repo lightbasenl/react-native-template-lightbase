@@ -1,0 +1,10 @@
+{
+  "@types/jest": "latest",
+  "@types/react-native": "latest",
+  "@types/react-test-renderer": "latest",
+  "@types/react": "latest",
+  "prettier": "latest",
+  "@testing-library/react-native": "latest",
+  "@lightbase/eslint-config-lightbase": "latest",
+  "typescript": "latest"
+}
