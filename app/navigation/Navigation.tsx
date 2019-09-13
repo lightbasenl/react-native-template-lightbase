@@ -1,31 +1,52 @@
 import React from 'react';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { createStackNavigator } from 'react-navigation-stack';
-
-import { createAppContainer, NavigationScreenProp, NavigationRoute } from 'react-navigation';
+import { createAppContainer, NavigationScreenProp, NavigationRoute, NavigationState } from 'react-navigation';
 
 import ErrorBoundary from 'screens/ErrorBoundary';
 import View from 'app/components/View';
 
-const TabNavigator = createBottomTabNavigator({
+export interface Navigation {
+  navigation: NavigationScreenProp<NavigationRoute>;
+}
+
+const MainNav = createBottomTabNavigator({
   Home: View.Base,
   Profile: View.Base,
   More: View.Base,
 });
 
-class AppNavigator extends React.Component<{ navigation: NavigationScreenProp<NavigationRoute> }> {
-  static router = TabNavigator.router;
-
-  render() {
-    const { navigation } = this.props;
-    return (
-      <ErrorBoundary goBack={navigation.goBack}>
-        <TabNavigator navigation={navigation} />
-      </ErrorBoundary>
-    );
-  }
+AppNavigator.router = MainNav.router;
+function AppNavigator({ navigation }: Navigation) {
+  return (
+    <ErrorBoundary goBack={navigation.goBack}>
+      <MainNav navigation={navigation} />
+    </ErrorBoundary>
+  );
 }
 
-const Navigation = createAppContainer(AppNavigator);
+const AppContainer = createAppContainer(AppNavigator);
 
-export default Navigation;
+function getActiveRouteName(navigationState: NavigationState) {
+  if (!navigationState) {
+    return null;
+  }
+  const route = navigationState.routes[navigationState.index];
+  if (route.routes) {
+    return getActiveRouteName(route);
+  }
+  return route.routeName;
+}
+
+export default function Navigation() {
+  return (
+    <AppContainer
+      onNavigationStateChange={(prevState, currentState) => {
+        const currentScreen = getActiveRouteName(currentState);
+        const prevScreen = getActiveRouteName(prevState);
+        if (prevScreen !== currentScreen) {
+          console.log({ currentScreen });
+        }
+      }}
+    />
+  );
+}
