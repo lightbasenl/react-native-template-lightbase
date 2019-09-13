@@ -6,6 +6,8 @@ import { IconProps } from 'react-native-vector-icons/Icon';
 
 const Ico = createIconSetFromIcoMoon(icoMoonConfig);
 
-export default function Icon({ name, color = colors.darkText, size = 30, ...iconProps }: IconProps) {
-  return <Ico name={name} color={color} size={size} {...iconProps} />;
-}
+const Icon: React.FC<IconProps> = ({ name, color = colors.darkText, size = 30, ...iconProps }) => (
+  <Ico name={name} color={color} size={size} {...iconProps} />
+);
+
+export default Icon;

@@ -1,11 +1,8 @@
 import React from 'react';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createStackNavigator } from 'react-navigation-stack';
 
-import {
-  createAppContainer,
-  createBottomTabNavigator,
-  NavigationScreenProp,
-  NavigationRoute,
-} from 'react-navigation';
+import { createAppContainer, NavigationScreenProp, NavigationRoute } from 'react-navigation';
 
 import ErrorBoundary from 'screens/ErrorBoundary';
 import View from 'app/components/View';
