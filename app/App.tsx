@@ -1,7 +1,7 @@
 import React from 'react';
 import Navigation from 'navigation/Navigation';
-import { useScreens } from 'react-native-screens';
-useScreens();
+import { enableScreens } from 'react-native-screens';
+enableScreens();
 // import CodePush from 'react-native-code-push';
 
 // import 'services/bugsnag';
