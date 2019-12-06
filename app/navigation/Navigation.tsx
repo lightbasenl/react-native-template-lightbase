@@ -31,7 +31,7 @@ export type AppStackParams = {
   Menu: undefined;
 };
 
-export interface NavScreenProp<T extends keyof (AppStackParams)> {
+export interface NavScreenProp<T extends keyof AppStackParams> {
   navigation: NativeStackNavigationProp<AppStackParams, T>;
   route: RouteProp<AppStackParams, T>;
 }
@@ -126,7 +126,7 @@ export function TabNavigator() {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let IconComponent = Ionicons;
-          let iconName;
+          let iconName = '';
 
           if (route.name === 'Home') {
             iconName = 'ios-home';
