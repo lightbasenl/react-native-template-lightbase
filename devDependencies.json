@@ -1,13 +1,22 @@
 {
   "@lightbase/eslint-config-lightbase": "latest",
-  "@testing-library/react-native": "latest",
   "@types/jest": "latest",
+  "@types/jsonwebtoken": "latest",
+  "@types/jwt-decode": "latest",
   "@types/react-native-vector-icons": "latest",
   "@types/react-native": "latest",
   "@types/react-test-renderer": "latest",
   "@types/react": "latest",
   "babel-plugin-transform-remove-console": "latest",
   "eslint": "latest",
+  "patch-package": "latest",
+  "postinstall-postinstall": "latest",
   "prettier": "latest",
+  "react-native-flipper": "latest",
+  "react-native-testing-library": "latest",
+  "reactotron-react-native": "latest",
+  "rn-snoopy": "latest",
+  "stop-runaway-react-effects": "latest",
+  "ts-jest": "latest",
   "typescript": "latest"
 }
