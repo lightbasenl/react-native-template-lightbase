@@ -11,11 +11,8 @@ if (screenWidth > screenHeight) {
 }
 
 export default function useStaticScreenSize() {
-  const smallScreen = width < 370 || height < 650;
-
   return {
     height,
     width,
-    smallScreen,
   };
 }

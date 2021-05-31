@@ -1,7 +1,6 @@
 apply plugin: "com.android.application"
 
 apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
-apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
 
 apply plugin: "com.bugsnag.android.gradle"
 
@@ -211,24 +210,6 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-
-    addUnimodulesDependencies([exclude: [
-        'expo-face-detector',
-        'expo-constants',
-        'expo-file-system',
-        'expo-permissions',
-        'expo-app-loader-provider',
-        'unimodules-barcode-scanner-interface',
-        'unimodules-camera-interface',
-        'unimodules-constants-interface',
-        'unimodules-face-detector-interface',
-        'unimodules-file-system-interface',
-        'unimodules-sensors-interface',
-        'unimodules-task-manager-interface',
-        'expo-image-loader',
-        'unimodules-image-loader-interface',
-        'unimodules-permissions-interface'
-    ]])
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'

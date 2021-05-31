@@ -39,14 +39,11 @@ const spacerRangeSmall = {
 } as const;
 
 function Spacer({ height, width }: { height?: keyof typeof spacerRange; width?: keyof typeof spacerRange }) {
-  const { smallScreen } = useStaticScreenSize();
-
-  const range = smallScreen ? spacerRangeSmall : spacerRange;
   return (
     <View
       style={{
-        paddingVertical: height ? range[height] / 2 : undefined,
-        width: width ? range[width] : undefined,
+        paddingVertical: height ? spacerRange[height] / 2 : undefined,
+        width: width ? spacerRange[width] : undefined,
       }}
     />
   );

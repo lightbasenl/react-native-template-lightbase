@@ -4,13 +4,11 @@ import Bugsnag from '@bugsnag/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CodePush from 'react-native-code-push';
 import { Button } from 'react-native';
-import { navigationRef } from 'navigation/Navigation';
 
 interface State {
   error: boolean;
 }
 
-const navigation = navigationRef.current;
 class ErrorBoundary extends React.Component<React.PropsWithChildren<{}>, State> {
   state = { error: false };
 
@@ -33,13 +31,8 @@ class ErrorBoundary extends React.Component<React.PropsWithChildren<{}>, State> 
           <Button
             title="OK"
             onPress={async () => {
-              if (navigation?.canGoBack()) {
-                navigation.goBack();
-                this.setState({ error: false });
-              } else {
-                await AsyncStorage.removeItem('search');
-                CodePush.restartApp();
-              }
+              await AsyncStorage.removeItem('search');
+              CodePush.restartApp();
             }}
           />
         </View.Screen>
