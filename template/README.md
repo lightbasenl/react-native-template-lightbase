@@ -44,7 +44,6 @@ bundle exec pod install --project-directory=./ios
 ## Building Android target
 
 ```bash
-bundle install
 yarn install
 ```
 
