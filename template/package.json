@@ -6,7 +6,6 @@
     "android": "react-native run-android --appIdSuffix staging",
     "androidStaging": "react-native run-android --variant=stagingRelease --appIdSuffix staging",
     "androidRelease": "react-native run-android --variant=release",
-    "androidDevProd": "ENVFILE=.env.production react-native run-android --appIdSuffix staging",
     "ios": "ENVFILE=.env.staging react-native run-ios",
     "iosRelease": "ENVFILE=.env.production react-native run-ios --configuration=Release",
     "iosStaging": "ENVFILE=.env.staging react-native run-ios --configuration=Staging",
@@ -20,7 +19,7 @@
     "patch": "node versionBump",
     "minor": "node versionBump version=minor",
     "major": "node versionBump version=major",
-    "codepush": "node codepush bugsnag_token=<BUGSNAG_TOKEN> ios_token=<IOS_TOKEN> android_token=<ANDROID_TOKEN> ios_app=Lightbase/<IOS_APP> android_app=Lightbase/<ANDROID_APP> deployment=Production"
+    "codepush": "node codepush"
   },
   "dependencies": {
     "@bugsnag/plugin-react-navigation": "7.10.0",
