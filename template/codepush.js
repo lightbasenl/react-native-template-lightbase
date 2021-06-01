@@ -1,6 +1,12 @@
 const http = require('https');
 const { spawn } = require('child_process');
 
+const ANDROID_APP = 'Lightbase/<ANDROID_APP>';
+const ANDROID_CODEPUSH_TOKEN = '<ANDROID_CODEPUSH_TOKEN>';
+const IOS_APP = 'Lightbase/<IOS_APP>';
+const IOS_CODEPUSH_TOKEN = '<IOS_CODEPUSH_TOKEN>';
+const BUGSNAG_TOKEN = '<BUGSNAG_TOKEN>';
+
 const bundleOutputIOS = 'build/CodePush/main.jsbundle';
 const bundleMapOutputIOS = 'build/CodePush/main.jsbundle.map';
 
@@ -9,7 +15,10 @@ const hermesOutputMap = 'build/CodePush/index.android.bundle.hbc.map';
 const composedMapOutputAndroid = 'build/CodePush/index.android.bundle.composed.map';
 const bundleMapOutputAndroid = 'build/CodePush/index.android.bundle.map';
 
-const flags = ['bugsnag_token', 'ios_app', 'ios_token', 'android_app', 'android_token', 'deployment'];
+// Releases both android and iOS codepushes to the staging environment
+// Bugsnag requires new sourcemaps to map the errors from codepush releases
+// new bundleIds are assigned to bugsnag based on Codepush version (refer to bugsnag.tsx)
+// Fetch latest codepush production release and upload new sourcemaps to bugsnag with this version number attached
 
 async function main() {
   try {
@@ -18,31 +27,17 @@ async function main() {
     return logError(e);
   }
 
-  for (const flag of flags) {
-    if (!process.argv.find((el) => el.includes(`${flag}=`))) {
-      return logError(`Please provide ${flag}= flag`);
-    }
-  }
-
-  const ios_token = process.argv.find((el) => el.includes('ios_token=')).replace('ios_token=', '');
-  const android_token = process.argv
-    .find((el) => el.includes('android_token='))
-    .replace('android_token=', '');
-
-  const ios_app = process.argv.find((el) => el.includes('ios_app=')).replace('ios_app=', '');
-  const android_app = process.argv.find((el) => el.includes('android_app=')).replace('android_app=', '');
-
   try {
     // IOS
     info('Starting ios codepush deployment');
 
-    await createAppcenterRelease({ app: ios_app });
+    await createAppcenterRelease({ app: IOS_APP });
 
     info('Uploading ios source maps to bugsnag');
 
     const codepushVersionIos = await getLatestDeploymentVersion({
-      app: ios_app,
-      token: ios_token,
+      app: IOS_APP,
+      token: IOS_CODEPUSH_TOKEN,
     });
 
     await uploadToBugsnag({
@@ -55,15 +50,15 @@ async function main() {
     // ANDROID
     info('Starting android codepush deployment');
 
-    await createAppcenterRelease({ app: android_app });
+    await createAppcenterRelease({ app: ANDROID_APP });
 
     info('Uploading android source maps to bugsnag');
 
     await combineSourceMaps();
 
     const codepushVersionAndroid = await getLatestDeploymentVersion({
-      app: android_app,
-      token: android_token,
+      app: ANDROID_APP,
+      token: ANDROID_CODEPUSH_TOKEN,
     });
 
     await uploadToBugsnag({
@@ -105,14 +100,7 @@ function checkGitStatus() {
 function createAppcenterRelease({ app }) {
   return new Promise((resolve, reject) => {
     info('Creating staging codepush release');
-    const appcenterArgs = [
-      'codepush',
-      'release-react',
-      `--app=${app}`,
-      '--output-dir=build',
-      '-m',
-      '--disable-duplicate-release-error',
-    ];
+    const appcenterArgs = ['codepush', 'release-react', `--app=${app}`, '--output-dir=build', '-m'];
 
     const uploadToAppcenter = spawn('appcenter', appcenterArgs);
 
@@ -164,10 +152,6 @@ function combineSourceMaps() {
 }
 
 function uploadToBugsnag({ bundleId, platform, source, bundle }) {
-  const BUGSNAG_TOKEN = process.argv
-    .find((el) => el.includes('bugsnag_token='))
-    .replace('bugsnag_token=', '');
-
   const bugsnagArgs = [
     'bugsnag-source-maps',
     'upload-react-native',
@@ -207,11 +191,9 @@ function uploadToBugsnag({ bundleId, platform, source, bundle }) {
 
 function getLatestDeploymentVersion({ app, token }) {
   return new Promise((resolve, reject) => {
-    const deploymentName = process.argv.find((el) => el.includes('deployment=')).replace('deployment=', '');
-
     const options = {
       host: 'api.appcenter.ms',
-      path: `/v0.1/apps/${app}/deployments/${deploymentName}`,
+      path: `/v0.1/apps/${app}/deployments/Production`,
       headers: { 'X-API-Token': token },
       methiod: 'GET',
     };
@@ -222,10 +204,8 @@ function getLatestDeploymentVersion({ app, token }) {
         str += chunk;
       });
       res.on('end', () => {
-        const data = JSON.parse(str);
-
-        const latestCodepushVersion = Number((data?.latest_release?.label || 'v0').replace('v', ''));
-
+        const deployments = JSON.parse(str);
+        const latestCodepushVersion = Number((deployments.latest_release.label || 'v0').replace('v', ''));
         info(`Latest codepush version for ${app}: ${latestCodepushVersion}`);
 
         let codepushVersion = latestCodepushVersion + 1;

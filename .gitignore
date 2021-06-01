@@ -1,7 +1,6 @@
 # OSX
 #
 .DS_Store
-.vscode
 
 # Xcode
 #
@@ -29,15 +28,10 @@ build/
 .gradle
 local.properties
 *.iml
-*.hprof
-
-# Eclipse
-#
-.project
 
 # node.js
 #
-node_modules/
+template/node_modules/
 npm-debug.log
 yarn-error.log
 
@@ -62,4 +56,7 @@ buck-out/
 *.jsbundle
 
 # CocoaPods
-/ios/Pods/
+template/ios/Pods/
+
+# react-native-config codegen
+template/ios/tmp.xcconfig

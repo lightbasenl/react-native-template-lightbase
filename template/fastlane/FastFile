@@ -1,0 +1,6 @@
+lane :refresh_dsyms do
+  build_number = get_version_number(xcodeproj: "ios/MyApp.xcodeproj")
+  download_dsyms(version: build_number)     # Download dSYM files from App Store Connect
+  upload_symbols_to_bugsnag              # Upload them to Bugsnag
+  clean_build_artifacts                  # Delete the local dSYM files
+end

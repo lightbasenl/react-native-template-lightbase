@@ -1,9 +1,9 @@
 # Generate sourcemaps for Bugsnag
 
-# REPLACE <MYAPP_NAME> with your app name and <MY_GITHUB_REPO_SSH> with your repo ssh
+# REPLACE <MY_GITHUB_REPO_SSH> with your repo ssh
 
 BUILD_NUMBER=$(git show -s --format=%ct)
-VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" ios/<MYAPP_NAME>/info.plist)
+VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" ios/MyApp/info.plist)
 export $(egrep -v '^#' .env | xargs)
 
 function notifySlack () {
