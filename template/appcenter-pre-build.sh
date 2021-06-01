@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# REPLACE <MYAPP_NAME> with your app name
-
 echo "Running appcenter-pre-build.sh"
 
 function notifySlack () {
@@ -23,7 +21,7 @@ function notifySlack () {
 BUILD_NUMBER=$(git show -s --format=%ct)
 echo "Setting build number to $BUILD_NUMBER"
 sed -i '' 's/versionCode=.*/versionCode='$BUILD_NUMBER'/' android/gradle.properties
-plutil -replace CFBundleVersion -string $BUILD_NUMBER ios/<MYAPP_NAME>/Info.plist
+plutil -replace CFBundleVersion -string $BUILD_NUMBER ios/MyApp/Info.plist
 
 # Set the correct ENVFILE based on the current branch for ios (android managed by gradle)
 if [ "$IS_PRODUCTION" == "true" ]; then
