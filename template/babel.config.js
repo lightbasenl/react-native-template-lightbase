@@ -7,19 +7,24 @@ module.exports = function (api) {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.android.js', '.android.tsx', '.ios.js', '.ios.tsx'],
     },
   ];
+
+  const presets = [['module:metro-react-native-babel-preset', { useTransformReactJSXExperimental: true }]];
+
+  const plugins = [
+    moduleResolver,
+    ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }],
+    'react-native-reanimated/plugin',
+  ];
+
   if (process.env.NODE_ENV === 'production' || process.env.BABEL_ENV === 'production') {
     return {
-      presets: ['module:metro-react-native-babel-preset'],
-      plugins: [
-        moduleResolver,
-        ['transform-remove-console', { exclude: ['error', 'info'] }],
-        'react-native-reanimated/plugin',
-      ],
+      presets,
+      plugins: [['transform-remove-console', { exclude: ['error', 'info'] }], ...plugins],
     };
   } else {
     return {
-      presets: ['module:metro-react-native-babel-preset'],
-      plugins: [moduleResolver, 'react-native-reanimated/plugin'],
+      presets,
+      plugins,
     };
   }
 };

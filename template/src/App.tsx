@@ -1,4 +1,3 @@
-import React from 'react';
 import { initialWindowMetrics, SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClientProvider } from 'react-query';
 import codepush from 'react-native-code-push';

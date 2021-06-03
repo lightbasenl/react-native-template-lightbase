@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import { createRef } from 'react';
 
 import { NavigationContainerRef, NavigatorScreenParams, RouteProp } from '@react-navigation/core';
 import { createNativeStackNavigator, NativeStackNavigationProp } from 'react-native-screens/native-stack';

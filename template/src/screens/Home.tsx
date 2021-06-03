@@ -1,4 +1,3 @@
-import React from 'react';
 import View from 'components/View';
 import { useHomeTabNavigation } from 'hooks/useTypedNavigation';
 import { Button } from 'react-native';

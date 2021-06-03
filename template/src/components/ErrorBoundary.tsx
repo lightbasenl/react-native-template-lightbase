@@ -1,4 +1,4 @@
-import React from 'react';
+import {Component, PropsWithChildren} from 'react';
 import View from 'components/View';
 import Bugsnag from '@bugsnag/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -9,7 +9,7 @@ interface State {
   error: boolean;
 }
 
-class ErrorBoundary extends React.Component<React.PropsWithChildren<{}>, State> {
+class ErrorBoundary extends Component<PropsWithChildren<{}>, State> {
   state = { error: false };
 
   componentDidCatch(error: Error) {

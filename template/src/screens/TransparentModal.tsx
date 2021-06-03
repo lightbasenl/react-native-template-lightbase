@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import View from 'components/View';
 import { Button, StyleSheet, useWindowDimensions } from 'react-native';
 import { useMainNavigation } from 'hooks/useTypedNavigation';
@@ -13,7 +13,7 @@ export function TransparentModal() {
     transform: [{ translateY: translateY.value }],
   }));
 
-  React.useEffect(() => {
+  useEffect(() => {
     translateY.value = withTiming(0);
   }, [translateY]);
 

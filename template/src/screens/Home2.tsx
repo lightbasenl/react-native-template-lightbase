@@ -1,4 +1,3 @@
-import React from 'react';
 import View from 'components/View';
 import { useHomeTabRoute } from 'hooks/useTypedNavigation';
 

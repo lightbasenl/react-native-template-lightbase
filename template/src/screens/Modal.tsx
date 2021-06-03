@@ -1,4 +1,3 @@
-import React from 'react';
 import View from 'components/View';
 import { Button } from 'react-native';
 import { useMainNavigation } from 'hooks/useTypedNavigation';
