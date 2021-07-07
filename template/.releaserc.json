@@ -1,0 +1,28 @@
+{
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    ["@semantic-release/release-notes-generator", {
+      "preset": "conventionalcommits",
+      "linkReferences": false,
+      "linkCompare": false
+    }],
+    "@semantic-release/changelog",
+    "@semantic-release/npm",
+    ["@semantic-release/git", {
+      "message": "chore(release): ${nextRelease.version} \n\n${nextRelease.notes}"
+    }]
+  ],
+  "branches": [
+    {
+      "name": "acceptance",
+      "channel": "rc",
+      "prerelease": "rc"
+    },
+    {
+      "name": "development",
+      "channel": "development",
+      "prerelease": "alpha"
+    },
+    "production"
+  ]
+}
