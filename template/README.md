@@ -18,6 +18,11 @@ Follow the `React Native CLI Quickstart` guide on the [React Native environment 
 - ruby version 2.7.2 - use [ruby version manager](https://rvm.io/) the project .ruby-gemset file will set the correct version
 - cocoapods should be installed via the local project gemfile (bundle install)
 
+### Semantic relases and commitlint with husky
+
+- appcenter build scripts manage the semantic relases with automated changelogs and release commits
+- commits need to conform to the commitlint config `chore: feat: fix:` types are currently only supported
+
 ## Managing ios provisioning profiles
 
 FastLane match is used for provisioning iOS builds.

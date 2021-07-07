@@ -2,18 +2,33 @@
 
 ## Initialise new project with the template
 
-npx react-native init LightbaseProjectName --template react-native-template-lightbase
+`npx react-native init LightbaseProjectName --template react-native-template-lightbase`
+`yarn install` - will also configure husky pre commits for semantic realse conformity
 
 ## Pre-requisites after initialisation
 
+### Semantic relases and commitlint with husky
+
+- appcenter build scripts manage the semantic relases with automated changelogs and release commits
+- commits need to conform to the commitlint config `chore: feat: fix:` types are currently only supported
+
 ### Setup git branches
 
-- development branch (main)
-- production branch
+- development branch (main) - alpha release cycle
+- acceptance branch - rc pre-release cycle
+- production branch - main release cycle
+
+### Create Slack channel to subscribed to github updates
+
+- used for pinging members of updates to repo and MR review comments
 
 ### Create Appcenter projects for android and iOS
 
-- ENV VARIABLES within appcenter. TODO
+- ENV VARIABLES within appcenter
+  - GITHUB_TOKEN - used for semantic relases
+  - SLACK_CHANNEL - to inform sla
+  - SLACK_TOKEN
+  - SKIP_FLIPPER=YES - improves iOS build times considerably
 - Add build pipelines for android and ios (development and production)
 
 ### Setup Codepush for iOS and android projects
@@ -32,5 +47,4 @@ npx react-native init LightbaseProjectName --template react-native-template-ligh
 ## Updating Template
 
 - Template should be updated on any major RN release
-- Bump project version
-- `npm publish` - when ready
+- `npx semantic-release --no-ci` - assume GITHUB_TOKEN is included in bash or zshl profile
